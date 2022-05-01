@@ -65,7 +65,7 @@ UI.prototype.mostrarMensaje = function(mensaje, tipo){
     formulario.insertBefore(div, document.querySelector("#resultado"));
     setTimeout( ()=>{
         div.remove();
-    }, 5000)
+    }, 3000)
     
 }
 UI.prototype.mostrarResultado = function(seguro, total){
@@ -76,9 +76,12 @@ UI.prototype.mostrarResultado = function(seguro, total){
         <p class="font-bold">Total: ${total} </p>
     `;
     const divResultado = document.querySelector("#resultado");
-    divResultado.appendChild(div);
     const spinner = document.querySelector("#cargando");
     spinner.style.display = "block";
+    setTimeout(() => {
+        spinner.style.display = "none";
+        divResultado.appendChild(div);
+    }, 3000)
 }
 
 const ui = new UI();
@@ -102,6 +105,10 @@ function cotizarSeguro(e){
         return;
     }
     ui.mostrarMensaje("cotizando", "exito");
+    const resultado = document.querySelector("resultado div")
+    if( resultado != null){
+
+    }
     const seguroAuto = new seguro(marca, year, tipo);
     const total = seguroAuto.cotizarSeguro();
     ui.mostrarResultado(seguroAuto, total);
