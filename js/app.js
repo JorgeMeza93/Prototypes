@@ -69,11 +69,28 @@ UI.prototype.mostrarMensaje = function(mensaje, tipo){
     
 }
 UI.prototype.mostrarResultado = function(seguro, total){
+    const {marca, year, tipo} = seguro;
+    let textoMarca;
+    switch(marca){
+        case 1:
+            textoMarca = "Americano"
+            break;
+        case 2:
+            textoMarca = "Asiático";
+            break;
+        case 3:
+            textoMarca = "Europeo"
+            break;
+        default:
+            break;
+    }
     const div = document.createElement("div");
     div.classList.add("mt-10");
     div.innerHTML = `
         <p class="header">Tu resumen</p>
-        <p class="font-bold">Total: ${total} </p>
+        <p class="font-bold">Marca: <span class="font-normal">${textoMarca}</p>
+        <p class="font-bold">Año: <span class="font-normal">${year}</p>
+        <p class="font-bold">Total: <span class="font-normal">$${total}</span></p>
     `;
     const divResultado = document.querySelector("#resultado");
     const spinner = document.querySelector("#cargando");
@@ -107,7 +124,7 @@ function cotizarSeguro(e){
     ui.mostrarMensaje("cotizando", "exito");
     const resultado = document.querySelector("resultado div")
     if( resultado != null){
-
+        resultado.remove();
     }
     const seguroAuto = new seguro(marca, year, tipo);
     const total = seguroAuto.cotizarSeguro();
